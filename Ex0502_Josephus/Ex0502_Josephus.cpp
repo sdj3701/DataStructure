@@ -17,7 +17,7 @@ int main()
 	q.Print();
 
 	// 마지막 한 명이 남을 때까지 반복
-	int i = 0;
+	int i = 1;
 	while (q.Size() != 1)
 	{
 		if (i == k)
