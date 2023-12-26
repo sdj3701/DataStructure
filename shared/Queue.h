@@ -67,8 +67,10 @@ public:
 
 		if (front_ < rear_)
 			return rear_ - front_;
+		else if (front_ > rear_)
+			return capacity_ - front_ + rear_;
 		else
-			return front_ - rear_;
+			return 0;
 
 	}
 
@@ -84,8 +86,19 @@ public:
 		// TODO: 하나하나 복사하는 방식은 쉽게 구현할 수 있습니다. 
 		//       (도전) 경우를 나눠서 memcpy()로 블럭 단위로 복사하면 더 효율적입니다.
 		//사이즈를 먼저 키우고 데이터를 복사를 하면 될듯 
-		temp = new T[capacity_];
-		capacity_ * 2;
+		T* temp = new T[capacity_ * 2];
+
+		int count = 1;
+		for (int i = (front_ + 1) % capacity_;i != (rear_ + 1) % capacity_;i = (i + 1) % capacity_)
+		{
+			temp[count] = queue_[i];
+			count++;
+		}
+		front_ = 0;
+		rear_ = capacity_ - 1;
+		capacity_ *= 2;
+		delete[] queue_;
+		queue_ = temp;
 	}
 
 	void Enqueue(const T& item) // 맨 뒤에 추가, Push()
@@ -95,7 +108,15 @@ public:
 
 		// TODO: 데이터를 추가할 때 Rear를 하나를 먼저 증가를 시킨 다음 값을 넣는다.
 		rear_ += 1;
-		queue_[rear_] = item;
+		if (capacity_ == rear_)
+		{
+			rear_ = 0;
+			queue_[rear_] = item;
+		}
+		else
+		{
+			queue_[rear_] = item;
+		}
 	}
 
 	void Dequeue() // 큐의 첫 요소 삭제, Pop()
@@ -103,7 +124,7 @@ public:
 		assert(!IsEmpty());
 
 		// TODO: 값을 먼저 빼고 front_ 증가
-		queue[front_] = null;
+		queue_[front_] = NULL;
 		front_ += 1;
 	}
 
