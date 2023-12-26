@@ -107,16 +107,8 @@ public:
 			Resize();
 
 		// TODO: 데이터를 추가할 때 Rear를 하나를 먼저 증가를 시킨 다음 값을 넣는다.
-		rear_ += 1;
-		if (capacity_ == rear_)
-		{
-			rear_ = 0;
-			queue_[rear_] = item;
-		}
-		else
-		{
-			queue_[rear_] = item;
-		}
+		rear_ = (rear_ + 1) % capacity_;
+		queue_[rear_] = item;
 	}
 
 	void Dequeue() // 큐의 첫 요소 삭제, Pop()
@@ -124,8 +116,7 @@ public:
 		assert(!IsEmpty());
 
 		// TODO: 값을 먼저 빼고 front_ 증가
-		queue_[front_] = NULL;
-		front_ += 1;
+		front_ = (front_ + 1) % capacity_;
 	}
 
 	void Print()
