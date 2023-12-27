@@ -53,7 +53,8 @@ public:
 	{
 		assert(!Base::IsEmpty());
 
-		// TODO:
+		// TODO: 맨뒤에서 제거
+		
 	}
 
 private:

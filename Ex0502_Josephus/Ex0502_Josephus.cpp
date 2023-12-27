@@ -17,20 +17,21 @@ int main()
 	q.Print();
 
 	// 마지막 한 명이 남을 때까지 반복
-	int i = 0;
+	int i = 1;
 	while (q.Size() != 1)
 	{
 		if (i == k)
 		{
+			q.Print();
 			cout << "Executed " << q.Front() << endl;
 			q.Dequeue();
 			i = 0;
 		}
 		else
 		{
-			q.Enqueue(q.Front());
+			int temp = q.Front();
 			q.Dequeue();
-			q.Print();
+			q.Enqueue(temp);
 		}
 		i++;
 	}
