@@ -120,7 +120,7 @@ public:
 	}
 
 	void Print()
-	{
+ 	{
 		using namespace std;
 
 		for (int i = (front_ + 1) % capacity_; i != (rear_ + 1) % capacity_; i = (i + 1) % capacity_)

@@ -36,7 +36,8 @@ public:
 			Base::Resize();
 
 		// TODO: R과 F의 위치는 처음에는 같다 하지만 F가 맨 앞에 있으면 다음 위치는 맨 마지막으로 가리킴
-		
+		Base::queue_[front_] = item;
+		Base::front_ = (Base::front_ - 1 + Base::capacity_) % Base::capacity_;
 	}
 
 	void PushBack(const T& item)
@@ -54,7 +55,7 @@ public:
 		assert(!Base::IsEmpty());
 
 		// TODO: 맨뒤에서 제거
-		
+		Base::rear_ = (Base::rear_ - 1 + Base::capacity_) % Base::capacity_;
 	}
 
 private:
