@@ -9,19 +9,31 @@ struct Node
 
 	friend ostream& operator<<(ostream& os, const Node& n)
 	{
-		cout << n.item << " " << flush;
+		cout <<"["<< &n << ", " << n.item << ", " <<n.next << "]" << flush;
 		return os;
 	}
 };
 
 void RecurPrint(Node* node)
 {
-	// TODO:
+	// TODO: 재귀
+	if (node != nullptr)
+	{
+		cout << *node << endl;
+		Node* current = node;
+		RecurPrint(current->next);
+	}
 }
 
 void IterPrint(Node* node)
 {
-	// TODO:
+	// TODO: 반복문
+	Node* current = node;
+	while (current != nullptr)
+	{
+		cout << *current << endl;
+		current = current->next;
+	}
 }
 
 int main()
@@ -66,6 +78,10 @@ int main()
 	// first->next = second;
 	// TODO:
 	// 마지막
+	first->next = second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
 
 	//cout << *(first) << endl;
 	//cout << *(first->next) << endl;
@@ -94,6 +110,7 @@ int main()
 	//cout << endl;
 
 	// TODO: 데이터 삭제
+	//first->next = nullptr;
 
 	return 0;
 }
