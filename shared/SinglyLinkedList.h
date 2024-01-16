@@ -20,6 +20,8 @@ public:
 	SinglyLinkedList(const SinglyLinkedList& list)
 	{
 		// TODO: 연결 리스트 복사
+		first_->item = list.first_->item;
+		first_->next = list.first_->next;
 	}
 
 	~SinglyLinkedList()
@@ -30,6 +32,14 @@ public:
 	void Clear() // 모두 지워야(delete) 합니다.
 	{
 		// TODO: 모두 삭제
+		Node* current_ = first_;
+
+		while (current_)
+		{
+			Node* temp_ = current_;
+			current_ = current_->next;
+			delete temp_;
+		}
 	}
 
 	bool IsEmpty()
@@ -42,6 +52,12 @@ public:
 		int size = 0;
 
 		// TODO: size를 하나하나 세어서 반환
+		Node* current_ = first_;
+		while (current_)
+		{
+			size++;
+			current_ = current_->next;
+		}
 
 		return size;
 	}
@@ -50,7 +66,9 @@ public:
 	{
 		assert(first_);
 
-		return T(); // TODO: 수정
+		Node* current_ = first_;
+
+		return current_->item; // TODO: 수정
 	}
 
 	T Back()
@@ -63,6 +81,15 @@ public:
 	Node* Find(T item)
 	{
 		// TODO: item이 동일한 노드 포인터 반환
+
+		Node* current_ = first_;
+		while (current_)
+		{
+			if (current_->item == item)
+			{
+				return *current_;
+			}
+		}
 
 		return nullptr;
 	}
