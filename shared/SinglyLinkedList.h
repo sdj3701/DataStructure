@@ -75,6 +75,8 @@ public:
 	{
 		assert(first_);
 
+		
+
 		return T(); // TODO: 수정
 	}
 
@@ -90,19 +92,28 @@ public:
 				return *current_;
 			}
 		}
-
 		return nullptr;
 	}
 
 	void InsertBack(Node* node, T item)
 	{
+		Node* current_ = first_;
 		if (IsEmpty())
 		{
 			// TODO:
+			current_ = new Node;
+			current_->next = node;
+			current_->item = item;
 		}
 		else
 		{
 			// TODO:
+			while (current_ != nullptr)
+			{
+				current_ = current_->next;
+			}
+			current_->next = node;
+			current_->item = item;
 		}
 	}
 
@@ -111,7 +122,8 @@ public:
 		assert(first_);
 
 		// 하나 앞의 노드를 찾아야 합니다.
-		// TODO:
+		// TODO: 반대로 설정하기 5->4->3->2->1
+
 	}
 
 	void PushFront(T item)
