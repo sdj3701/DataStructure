@@ -20,8 +20,12 @@ public:
 	SinglyLinkedList(const SinglyLinkedList& list)
 	{
 		// TODO: 연결 리스트 복사
-		first_->item = list.first_->item;
-		first_->next = list.first_->next;
+		Node* current = list.first_;
+		while (current)
+		{
+			this->PushBack(current->item);
+			current = current->next;
+		}
 	}
 
 	~SinglyLinkedList()
@@ -66,18 +70,20 @@ public:
 	{
 		assert(first_);
 
-		Node* current_ = first_;
-
-		return current_->item; // TODO: 수정
+		return first_->item; // TODO: 수정
 	}
 
 	T Back()
 	{
 		assert(first_);
 
-		
+		Node* current = first_;
+		while (current->next)
+		{
+			current = current->next;
+		}
+		return current->item;
 
-		return T(); // TODO: 수정
 	}
 
 	Node* Find(T item)
@@ -89,32 +95,21 @@ public:
 		{
 			if (current_->item == item)
 			{
-				return *current_;
+				return current_;
 			}
+
+			current_ = current_->next;
 		}
 		return nullptr;
 	}
 
 	void InsertBack(Node* node, T item)
 	{
-		Node* current_ = first_;
-		if (IsEmpty())
-		{
-			// TODO:
-			current_ = new Node;
-			current_->next = node;
-			current_->item = item;
-		}
-		else
-		{
-			// TODO:
-			while (current_ != nullptr)
-			{
-				current_ = current_->next;
-			}
-			current_->next = node;
-			current_->item = item;
-		}
+		Node* current_ = new Node;
+		current_->item = item;
+		current_->next = node->next;
+		node->next = current_;
+			
 	}
 
 	void Remove(Node* n)
@@ -122,7 +117,15 @@ public:
 		assert(first_);
 
 		// 하나 앞의 노드를 찾아야 합니다.
-		// TODO: 반대로 설정하기 5->4->3->2->1
+		Node* prev = first_;
+		while (prev->next)
+		{
+			if (prev->next == n)
+				break;
+			prev = prev->next;
+		}
+		prev->next = n->next;
+		delete n;
 
 	}
 
@@ -132,20 +135,47 @@ public:
 
 		// 새로운 노드 만들기
 		// TODO:
-
+		Node* temp = new Node;
+		temp->item = item;
 		// 연결 관계 정리
 		// TODO:
+		temp->next = first_;
+		first_ = temp;
 	}
 
 	void PushBack(T item)
 	{
 		if (first_)
 		{
-			// TODO:
+			Node* temp = new Node;
+			// TODO: 값이 있어?
+			while (first_)
+			{
+				first_ = first_->next;
+				if (first_ == nullptr)
+				{
+					temp->item = item;
+					temp->next = first_;
+					first_ = temp;
+					break;
+				}
+			}
+			/*
+			Node* current  = first_;
+			while(current->next)
+				current = current->next;
+			Node* new_node = new Node;
+			new_node->item = item;
+			new_node->next = nullptr;
+
+			current->next = new_node;
+
+			*/
 		}
 		else
 		{
-			// TODO:
+			// TODO: 값이 없어?
+			PushFront(T item);
 		}
 	}
 
@@ -160,6 +190,11 @@ public:
 
 		assert(first_);
 
+		Node* temp = first_;
+		first_ = first_->next;
+
+		delete temp;
+
 		// TODO: 메모리 삭제
 	}
 
@@ -172,9 +207,25 @@ public:
 			return;
 		}
 
+		if (first_->next == nullptr)
+		{
+			delete first_;
+			first_ = nullptr;
+			return;
+		}
+
 		// 맨 뒤에서 하나 앞의 노드를 찾아야 합니다.
 
 		assert(first_);
+
+		Node* second_last = first_;
+		while (second_last->next->next)
+			second_last = second_last->next;
+
+		Node* temp = second_last->next;
+		second_last->next = second_last->next->next;
+
+		delete temp;
 
 		// TODO: 메모리 삭제
 	}
@@ -182,6 +233,19 @@ public:
 	void Reverse()
 	{
 		// TODO: 
+		Node* current = first_;
+		Node* prev = nullptr;
+		temp = first_->next;
+
+		while (current)
+		{
+			Node* temp = prev;
+			prev = current;
+			current = current->next;
+			prev->next = temp;
+
+		}
+		first_ = prev;
 	}
 
 	void SetPrintDebug(bool flag)

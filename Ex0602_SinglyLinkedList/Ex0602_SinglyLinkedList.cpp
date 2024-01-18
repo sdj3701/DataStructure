@@ -8,7 +8,7 @@ int main()
 {
 	SinglyLinkedList<int> list;
 
-	list.SetPrintDebug(false);
+	list.SetPrintDebug(true);
 
 	list.PushFront(3);
 	list.PushBack(4);
