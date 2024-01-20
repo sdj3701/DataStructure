@@ -175,7 +175,7 @@ public:
 		else
 		{
 			// TODO: 값이 없어?
-			PushFront(T item);
+			PushFront(item);
 		}
 	}
 
@@ -235,7 +235,7 @@ public:
 		// TODO: 
 		Node* current = first_;
 		Node* prev = nullptr;
-		temp = first_->next;
+		prev = first_->next;
 
 		while (current)
 		{

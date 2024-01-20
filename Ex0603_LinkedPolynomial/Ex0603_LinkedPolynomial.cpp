@@ -17,6 +17,8 @@ public:
 	void NewTerm(float coef, int exp)
 	{
 		// TODO:
+		Term term = { coef , exp };
+		PushBack(term);
 	}
 
 	float Eval(float x)
@@ -48,6 +50,19 @@ public:
 		bool is_first = true; // 더하기 출력시 확인용
 
 		// TODO:
+		Node* current = first_;
+
+		while (current)
+		{
+			if (!is_first)
+				cout << " + ";
+
+			cout << current->item.coef;
+			if (current->item.exp != 0)cout << "*" << "X^" << current->item.exp;
+
+			is_first = false;
+			current = current->next;
+		}
 
 		cout << endl;
 	}
