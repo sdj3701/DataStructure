@@ -135,12 +135,14 @@ public:
 
 		// 새로운 노드 만들기
 		// TODO:
-		Node* temp = new Node;
-		temp->item = item;
+		Node* current = new Node;
+		current->item = itme;
+
+		current->next = first_;
+		first_ = current;
+		
 		// 연결 관계 정리
 		// TODO:
-		temp->next = first_;
-		first_ = temp;
 	}
 
 	void PushBack(T item)
