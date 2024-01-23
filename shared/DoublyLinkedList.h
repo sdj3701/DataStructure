@@ -34,7 +34,7 @@ public:
 
 	bool IsEmpty()
 	{
-		return true; // TODO:
+		return first_ == nullptr ? true : false ; // TODO: nullptr 이야? 그러면 참 아니야? 그러면 거짓
 	}
 
 	int Size()
@@ -101,38 +101,52 @@ public:
 		{
 			current->item = item;
 			first_ = current;
-			current->left = first_;
+			current->left = nullptr;
 			current->right = nullptr;
 		}
 		else
 		{
-			//한 발짝 앞으로
-			current = first_->right;
-
-			//잠깐 가지고 있을 temp 생성
+			current->item = item;
 			Node* temp = new Node;
-			temp->left = current->left;
-			temp->item = item;
-			temp->right = first_->right;
-
-			//이제 연결해야지 끊고 연결
-			first_->right = temp->left;
-			current->left = temp->right;
+			Node* prev = new Node;
+			prev = first_;
+			prev = prev->right;
+			temp = first_;
+			first_ = current;
+			current->left = nullptr;
+			current->right = prev;
+			prev->left = current;
 		}
 	}
 
 	void PushBack(T item)
 	{
-		// TODO:이제 뒤에서 넣기
-		while (first_)
-		{
-			first_ = first_->right;
-		}
+		// TODO: 만약 first_가 널이면? 추가 해줘야 겠지? 있으면 while문 타고 가면 되지만
 		Node* current = new Node;
-		current->item = item;
-		first_ = current->left;
-		current->left = first_;
-		current->right = nullptr;
+		if (first_ == nullptr)
+		{
+			current->item = item;
+			first_ = current;
+			current->left = nullptr;
+			current->right = nullptr;
+		}
+		else
+		{
+			while (first_->right)
+			{
+				first_ = first_->right;
+			}
+			Node* temp = new Node;
+			Node* back = new Node;
+			temp = first_;
+			current->item = item;
+			first_ = current->left;
+			current->left = first_;
+			current->right = nullptr;
+			temp->right = current;
+		}
+
+		
 
 	}
 
