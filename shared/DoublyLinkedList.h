@@ -22,6 +22,16 @@ public:
 	{
 	}
 
+	DoublyLinkedList(const DoublyLinkedList& list)
+	{
+		Node* current = list.first_;
+		while (current)
+		{
+			this->PushBack(current->item);
+			current = current->right;
+		}
+	}
+
 	~DoublyLinkedList()
 	{
 		Clear();
@@ -29,12 +39,16 @@ public:
 
 	void Clear() // 모두 지워야(delete) 합니다.
 	{
+		while (first_)
+		{
+			PopFront();
+		}
 		// TODO:
 	}
 
 	bool IsEmpty()
 	{
-		return first_ == nullptr ? true : false ; // TODO: nullptr 이야? 그러면 참 아니야? 그러면 거짓
+		return first_ == nullptr;//first_ == nullptr ? true : false ; // TODO: nullptr 이야? 그러면 참 아니야? 그러면 거짓
 	}
 
 	int Size()
@@ -42,9 +56,10 @@ public:
 		int size = 0;
 
 		// TODO: 몇개니?
-		while (first_)
+		Node* current = first_;
+		while (current)
 		{
-			first_ = first_->right;
+			current = current->right;
 			size++;
 		}
 
@@ -64,20 +79,50 @@ public:
 			cout << "Size = " << Size() << endl;
 
 			cout << " Forward: ";
-			// TODO:
-			cout << current->left;
+			// TODO: 순서대로 출력 전부
+			while (1)
+			{
+				cout << current->item << " ";
+				/*if (current->right)
+					current = current->right;
+				else
+					break;*/
+				if (!current->right)
+					break;
+				current = current->right;
+			}
 			cout << endl;
 
 			cout << "Backward: ";
-			// TODO:
-			cout << current->right;
+			// TODO: 역순으로 출력 전부
+			while (1)
+			{
+				cout << current->item << " ";
+				/*if (current->left)
+					current = current->left;
+				else
+					break;*/
+
+				if (!current->left)
+					break;
+				current = current->left;
+			}
 			cout << endl;
 		}
 	}
 
 	Node* Find(T item)
 	{
-		return nullptr; // TODO:
+		Node* current = first_;
+
+		while (current)
+		{
+			if (current->item == item)
+				return current;
+			current = current->right;
+		}
+		
+		return current; // TODO:
 	}
 
 	void InsertBack(Node* node, T item)
@@ -89,6 +134,14 @@ public:
 		else
 		{
 			// TODO:
+			Node* temp = new Node;
+			temp->item = item;
+			temp->right = node->right;
+			node->right = temp;
+
+			if (temp->right)
+				temp->right->left = temp;
+			temp->left = node;
 		}
 	}
 
@@ -97,26 +150,9 @@ public:
 		// TODO:이제 양쪽 연결 
 		
 		Node* current = new Node;
-		if (first_ == nullptr)
-		{
-			current->item = item;
-			first_ = current;
-			current->left = nullptr;
-			current->right = nullptr;
-		}
-		else
-		{
-			current->item = item;
-			Node* temp = new Node;
-			Node* prev = new Node;
-			prev = first_;
-			prev = prev->right;
-			temp = first_;
-			first_ = current;
-			current->left = nullptr;
-			current->right = prev;
-			prev->left = current;
-		}
+		current->item = item;
+
+		
 	}
 
 	void PushBack(T item)
