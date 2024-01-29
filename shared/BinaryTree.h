@@ -71,7 +71,17 @@ public:
 
 	int Sum(Node* node)
 	{
-		return 0; // TODO:
+		
+		if (node == nullptr)
+		{
+			return 0;
+		}
+
+		int sum = node->item;
+		sum += Sum(node->left);
+		sum += Sum(node->right);
+
+		return sum; // TODO:
 	}
 
 	int Height()
