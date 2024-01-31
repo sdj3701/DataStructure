@@ -70,8 +70,7 @@ public:
 	}
 
 	int Sum(Node* node)
-	{
-		
+	{		
 		if (node == nullptr)
 		{
 			return 0;
@@ -91,6 +90,13 @@ public:
 
 	int Height(Node* node)
 	{
+		if (node == nullptr)
+		{
+			return 0;
+		}
+
+
+
 		return 0; // TODO:
 	}
 
